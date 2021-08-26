@@ -12,7 +12,7 @@ namespace RunicMonsterHighlighter
 {
     public class RunicMonsterHighlighter : BaseSettingsPlugin<RunicMonsterHighlighterSettings>
     {
-        private Dictionary<Entity, DeliriumSpawnerType> HighlightedEntities = new Dictionary<Entity, float>();
+        private Dictionary<Entity, float> HighlightedEntities = new Dictionary<Entity, float>();
 
 
         public override void EntityAdded(Entity entity)
