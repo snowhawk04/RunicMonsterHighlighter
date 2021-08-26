@@ -37,10 +37,10 @@ namespace RunicMonsterHighlighter
             RemoveNotValidEntities();
             foreach (var highlightedEntity in HighlightedEntities)
             {
-                if (highlightedEntity.Value < settings.Scale.Value) continue;
+                if (highlightedEntity.Value < Settings.Scale.Value) continue;
 
-                var color = settings.Color.Value;
-                var size = settings.Size.Value;
+                var color = Settings.Color.Value;
+                var size = Settings.Size.Value;
                 DrawEntity(highlightedEntity.Key, color, size);
             }
         }
