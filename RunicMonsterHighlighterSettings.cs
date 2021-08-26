@@ -18,7 +18,7 @@ namespace RunicMonsterHighlighter
             Enable = new ToggleNode(false);
             Scale = new RangeNode<float>(1.0f, 0.0f, 2.0f);
             Color = new ColorNode(Color.Green);
-            Size = new RangeNode<float>(15, 1, 50);
+            Size = new RangeNode<int>(15, 1, 50);
         }
 
         [Menu("Enable", 0)]
