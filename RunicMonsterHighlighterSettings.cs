@@ -17,7 +17,7 @@ namespace RunicMonsterHighlighter
         {
             Enable = new ToggleNode(false);
             Scale = new RangeNode<float>(1.0f, 0.0f, 2.0f);
-            Color = new ColorNode(Color.Green);
+            BorderColor = new ColorNode(Color.Green);
             Size = new RangeNode<int>(15, 1, 50);
         }
 
@@ -26,7 +26,7 @@ namespace RunicMonsterHighlighter
         [Menu("Scale", 1)]
         public RangeNode<float> Scale { get; set; }
         [Menu("Color", 2)]
-        public ColorNode Color { get; set; }
+        public ColorNode BorderColor { get; set; }
         [Menu("Size", 3)]
         public RangeNode<int> Size { get; set; }
     }
