@@ -44,7 +44,7 @@ namespace RunicMonsterHighlighter
             {
                 if (highlightedEntity.Value < Settings.Scale.Value) continue;
 
-                var color = Settings.Color.Value;
+                var color = Settings.BorderColor.Value;
                 var size = Settings.Size.Value;
                 DrawEntity(highlightedEntity.Key, color, size);
             }
