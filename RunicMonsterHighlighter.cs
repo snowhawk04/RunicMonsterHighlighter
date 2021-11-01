@@ -1,48 +1,46 @@
 using ExileCore;
 using ExileCore.PoEMemory.Components;
 using ExileCore.PoEMemory.MemoryObjects;
-using ExileCore.Shared;
-using ExileCore.Shared.Abstract;
-using ExileCore.Shared.Cache;
-using ExileCore.Shared.Enums;
-using ExileCore.Shared.Helpers;
 using SharpDX;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RunicMonsterHighlighter
 {
     public class RunicMonsterHighlighter : BaseSettingsPlugin<RunicMonsterHighlighterSettings>
     {
-        private Dictionary<Entity, float> HighlightedEntities = new Dictionary<Entity, float>();
-
+        private readonly Dictionary<Entity, float> _HighlightedEntities = new Dictionary<Entity, float>();
 
         public override void EntityAdded(Entity entity)
         {
-            if (entity.Metadata.EndsWith("ExpeditionMarker"))
+            if (entity != null && entity.HasComponent<Positioned>() && entity.Metadata.EndsWith("ExpeditionMarker"))
             {
-                HighlightedEntities.Add(entity, entity.GetComponent<Positioned>().Scale);
-                return;
+                _HighlightedEntities.Add(entity, entity.GetComponent<Positioned>().Scale);
             }
         }
 
         public override void EntityRemoved(Entity entity)
         {
-            if (HighlightedEntities.ContainsKey(entity))
+            if (_HighlightedEntities.ContainsKey(entity))
             {
-                HighlightedEntities.Remove(entity);
+                _HighlightedEntities.Remove(entity);
             }
+        }
+
+        public override void AreaChange(AreaInstance area)
+        {
+            base.AreaChange(area);
+            _HighlightedEntities.Clear();
         }
 
         public override void Render()
         {
-            RemoveNotValidEntities();
-            foreach (var highlightedEntity in HighlightedEntities)
+            RemoveInvalidEntities();
+            foreach (var highlightedEntity in _HighlightedEntities)
             {
-                if (highlightedEntity.Value < Settings.Scale.Value) continue;
+                if (highlightedEntity.Value < Settings.Scale.Value)
+                {
+                    continue;
+                }
 
                 var color = Settings.BorderColor.Value;
                 var size = Settings.Size.Value;
@@ -50,20 +48,9 @@ namespace RunicMonsterHighlighter
             }
         }
 
-        private void RemoveNotValidEntities()
+        private void RemoveInvalidEntities()
         {
-            var removeList = new List<Entity>();
-            foreach (var highlightedEntity in HighlightedEntities.Keys)
-            {
-                if (!highlightedEntity.IsValid)
-                {
-                    removeList.Add(highlightedEntity);
-                }
-            }
-            foreach (var entityToBeRemoved in removeList)
-            {
-                HighlightedEntities.Remove(entityToBeRemoved);
-            }
+            _HighlightedEntities.RemoveAllByKey(entity => !entity.IsValid);
         }
 
         private void DrawEntity(Entity entity, Color color, int size)
