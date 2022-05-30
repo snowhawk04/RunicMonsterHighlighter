@@ -7,3 +7,5 @@ If you want to tag large skulls only, set the value of the slider to something l
 
 This requires the scale value from the Positioned Component. It's also a really basic implementation, with things on the todo like checking the instance
 for an active expedition or only tagging during setup. Could probably dig through and find a way to segregate the various object types (e.g. texture used).
+
+Check out https://github.com/arturino009/ExpeditionIcons for a more feature-filled highlighter for expedition!
